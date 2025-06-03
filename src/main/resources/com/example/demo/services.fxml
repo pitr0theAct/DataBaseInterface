@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ServicesController">
+   <children>
+      <TableView fx:id="tableServices" layoutX="149.0" prefHeight="398.0" prefWidth="553.0" />
+      <TextField fx:id="txt_service_name" layoutY="33.0" promptText="название" />
+      <Button layoutY="77.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="25.0" prefWidth="149.0" text="Add" />
+      <Button layoutY="108.0" mnemonicParsing="false" onAction="#onUpdateButtonClick" prefHeight="25.0" prefWidth="149.0" text="Change" />
+      <Button layoutY="140.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" prefHeight="25.0" prefWidth="149.0" text="Delete" />
+      <Button layoutY="398.0" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" text="Back to starting page" />
+   </children>
+</AnchorPane>
