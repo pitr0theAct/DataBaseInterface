@@ -115,18 +115,6 @@ public class DBAdapter {
 
 
     /// Хозяева ///
-    /*public void insertOwners(String surname, String name, String middlename, String address) throws SQLException {
-        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
-        String sql = "INSERT INTO owners(surname, name, middlename, address) " +
-                "VALUES('"+surname+"','"+name+"','"+middlename+",'"+address+"')";
-        try (Statement stmt = con.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            System.out.println("error in 'insertOwners': " + e);
-        }
-        System.out.println("Inserted in Owners Table");
-    }*/
-
     public void insertOwners(String surname, String name, String middlename, String address) throws SQLException {
         con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
         String sql = "INSERT INTO owners (surname, name, middlename, address) VALUES (?, ?, ?, ?)";
@@ -171,6 +159,53 @@ public class DBAdapter {
 
     void update_dataOwners(Integer id_owner,String surname, String name, String middlename, String address) throws SQLException {
         String sql = "UPDATE owners SET middlename='"+middlename+"', surname='"+surname+"' , name='"+name+"' , address='"+address+"' WHERE id_owner='"+id_owner+"'";
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(sql);
+        stmt.close();
+        System.out.println("Updated data");
+    }
+
+    /// Услуги ///
+    public void insertServices(String service_name) throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        String sql = "INSERT INTO services(service_name) " +
+                "VALUES('"+service_name+"')";
+        try (Statement stmt = con.createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println("error in 'insertServices': " + e);
+        }
+        System.out.println("Inserted in Services Table");
+    }
+
+
+    ArrayList<Services> select_dataServices() throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        ArrayList<Services> services = new ArrayList<>();
+
+        String sql = "SELECT *  FROM services";
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()){
+            int id_service = rs.getInt("id_service");
+            String service_name = rs.getString("service_name");
+            services.add(new Services(id_service,service_name));
+        }
+        return services;
+    }
+
+    void delete_dataServices(Integer id) throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        String sql = "DELETE FROM services WHERE id_service='"+id+"'";
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(sql);
+        stmt.close();
+        System.out.println("Deleted data");
+    }
+
+
+    void  update_dataServices(Integer id_service,String service_name) throws SQLException {
+        String sql = "UPDATE services SET  service_name='"+service_name+"'  WHERE id_service='"+id_service+"'";
         Statement stmt = con.createStatement();
         stmt.executeUpdate(sql);
         stmt.close();
