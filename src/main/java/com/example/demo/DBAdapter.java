@@ -70,6 +70,43 @@ public class DBAdapter {
         }
         System.out.println("Inserted in Dogs Table");
     }
+
+
+    ArrayList<Dogs> select_dataDogs() throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        ArrayList<Dogs> dogs = new ArrayList<>();
+
+        String sql = "SELECT *  FROM dogs";
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()){
+            int id_dog = rs.getInt("id_dog");
+            String id_owners = rs.getString("id_owners");
+            String dog_name = rs.getString("dog_name");
+            String species = rs.getString("species");
+            dogs.add(new Dogs(id_dog,id_owners,dog_name,species));
+        }
+        return dogs;
+    }
+
+    void delete_dataDogs(Integer id) throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        String sql = "DELETE FROM dogs WHERE id_dog='"+id+"'";
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(sql);
+        stmt.close();
+        System.out.println("Deleted data");
+    }
+
+
+    void  update_dataDogs(Integer id_dog,String id_owners, String dog_name,String species) throws SQLException {
+        String sql = "UPDATE dogs SET id_owners='"+id_owners+"', dog_name='"+dog_name+"' , species='"+species+"' WHERE id_dog='"+id_dog+"'";
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(sql);
+        stmt.close();
+        System.out.println("Updated data");
+    }
+
 /*
     public void insertOwners(String surname, String name, String middlename, String address) {
         String sql = "insert into owners (surname, name, middlename, address)" +
@@ -114,25 +151,6 @@ public class DBAdapter {
         System.out.println("Inserted in Visits Table");
     }
 */
-
-    ArrayList<Dogs> select_dataDogs() throws SQLException {
-        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
-        ArrayList<Dogs> dogs = new ArrayList<>();
-
-        String sql = "SELECT *  FROM dogs";
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);
-        while (rs.next()){
-            int id_dog = rs.getInt("id_dog");
-            String id_owners = rs.getString("id_owners");
-            String dog_name = rs.getString("dog_name");
-            String species = rs.getString("species");
-            dogs.add(new Dogs(id_dog,id_owners,dog_name,species));
-        }
-        return dogs;
-    }
-
-
 
 
 }

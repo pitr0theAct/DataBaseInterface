@@ -4,17 +4,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 
-public class DogsController {
+public class DogsController implements Initializable {
     DBAdapter adapter = new DBAdapter();
 
     @FXML
@@ -51,13 +55,21 @@ public class DogsController {
     }
 
     @FXML
-    void onDeleteButtonClick(ActionEvent event) {
-
+    public void onDeleteButtonClick() throws IOException, SQLException {
+        Dogs dogs = tableDogs.getSelectionModel().getSelectedItem();
+        adapter.delete_dataDogs(dogs.getId_dog());
+        updateTable();
     }
 
     @FXML
-    void onUpdateButtonClick(ActionEvent event) {
-
+    public void onUpdateButtonClick() throws IOException, SQLException {
+        Dogs dogs = tableDogs.getSelectionModel().getSelectedItem();
+        System.out.println(dogs.getId_dog());
+        String dog_name = txt_dogname.getText();
+        String id_owners = txt_ownerID.getText();
+        String species = txt_species.getText();
+        adapter.update_dataDogs(dogs.getId_dog(), id_owners, dog_name, species);
+        updateTable();
     }
 
     private void updateTable() throws IOException, SQLException {
@@ -79,6 +91,19 @@ public class DogsController {
         ObservableList<Dogs> data_new = FXCollections.observableArrayList(data);
         tableDogs.setItems(data_new);
 
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        adapter.connect();
+        try {
+            updateTable();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
