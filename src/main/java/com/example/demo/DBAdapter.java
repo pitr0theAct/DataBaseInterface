@@ -32,8 +32,8 @@ public class DBAdapter {
                     "    surname        TEXT not null," +
                     "    name           TEXT not null, " +
                     "    middlename     TEXT null, " +
-                    "    date_of_birth  date not null," +
-                    "    address        binary(1) null  " +
+                    "    date_of_birth  TEXT not null," +
+                    "    address        TEXT null  " +
                     ");";
             String services = "create table if not exists services" +
                     "(" +
@@ -45,12 +45,12 @@ public class DBAdapter {
                     "    id_visit       integer primary key autoincrement," +
                     "    id_employee    integer not null," +
                     "    id_dog         integer not null," +
-                    "    date_of_visit  date not null, " +
-                    "    coming_time    time not null, " +
-                    "    leaving_time   time not null, " +
+                    "    date_of_visit  TEXT not null, " +
+                    "    coming_time    TEXT not null, " +
+                    "    leaving_time   TEXT not null, " +
                     "    walking_time   integer not null," +
                     "    id_service     integer not null," +
-                    "    incident       text null  " +
+                    "    incident       TEXT null  " +
                     ");";
             stmt.execute(dogs);
             stmt.execute(owners);
@@ -212,32 +212,64 @@ public class DBAdapter {
         System.out.println("Updated data");
     }
 
+    /// Работники ///
+    public void insertEmployees(String surname, String name, String middlename, String date_of_birth, String address) throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        String sql = "INSERT INTO employees (surname, name, middlename, date_of_birth, address) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, surname);
+            pstmt.setString(2, name);
+            pstmt.setString(3, middlename);
+            pstmt.setString(4, date_of_birth);
+            pstmt.setString(5, address);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error in 'insertOwners': " + e.getMessage());
+        }
+    }
+
+    ArrayList<Employees> select_dataEmployees() throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        ArrayList<Employees> employees = new ArrayList<>();
+
+        String sql = "SELECT *  FROM employees";
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()){
+            int id_employees = rs.getInt("id_employee");
+            String surname = rs.getString("surname");
+            String name = rs.getString("name");
+            String middle_name = rs.getString("middlename");
+            String date_of_birth = rs.getString("date_of_birth");
+            String address = rs.getString("address");
+            employees.add(new Employees(id_employees,surname, name, middle_name, date_of_birth, address));
+        }
+        return employees;
+    }
+
+    void delete_dataEmployees(Integer id) throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        String sql = "DELETE FROM employees WHERE id_employee='"+id+"'";
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(sql);
+        stmt.close();
+        System.out.println("Deleted data");
+    }
+
+
+    void  update_dataEmployees(Integer id_employee,String surname, String name, String middle_name, String date_of_birth, String address) throws SQLException {
+        String sql = "UPDATE employees SET  surname ='"+surname+"', name='"+name+"' , middlename ='"+middle_name+"' , " +
+                "date_of_birth='"+date_of_birth+"' , address ='"+address+"'  WHERE id_employee='"+id_employee+"'";
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(sql);
+        stmt.close();
+        System.out.println("Updated data");
+    }
+
 
 
 
 /*
-    public void insertOwners(String surname, String name, String middlename, String address) {
-        String sql = "insert into owners (surname, name, middlename, address)" +
-                "values (" + surname + ", " + name + ", " + middlename + ", " + address + ")";
-        try (Statement stmt = con.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            System.out.println("error in 'insertOwners': " + e);
-        }
-        System.out.println("Inserted in Owners Table");
-    }
-    public void insertEmployees(String surname, String name, String middlename, java.sql.Date date_of_birth, Boolean address) {
-        String sql = "insert into employees (surname, name, middlename, date_of_birth, address)" +
-                "values (" + surname + ", " + name + ", " + middlename + ", " + date_of_birth + "," + address + ")";
-        try (Statement stmt = con.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            System.out.println("error in 'insertEmployees': " + e);
-        }
-        System.out.println("Inserted in Owners Table");
-    }
-
-
 
     public void insertVisits(Integer id_employee, Integer id_dog, java.sql.Date date_of_visit, java.sql.Time coming_time, java.sql.Time leaving_time, Integer walking_time, Integer id_service, String incident) {
         String sql = "insert into visits (id_employee, id_dog, date_of_visit, coming_time, leaving_time, walking_time, id_service, incident)" +
