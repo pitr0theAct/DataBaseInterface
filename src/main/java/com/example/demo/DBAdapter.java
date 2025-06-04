@@ -11,36 +11,36 @@ public class DBAdapter {
             con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
 
             Statement stmt = con.createStatement();
-            String sql = "create table if not exists dogs" +
+            String dogs = "create table if not exists dogs" +
                     "(" +
                     "    id_dog       integer primary key autoincrement," +
                     "    id_owners    TEXT not null," +
                     "    dog_name     TEXT not null, " +
                     "    species      TEXT not null" +
-                    ");" +
-                    "create table if not exists owners" +
+                    ");";
+            String owners = "create table if not exists owners" +
                     "(" +
                     "    id_owner   integer primary key autoincrement," +
                     "    surname    TEXT not null," +
                     "    name       TEXT not null, " +
-                    "    middlename TEXT null, " +
+                    "    middlename TEXT  null, " +
                     "    address    TEXT not null" +
-                    ");" +
-                    "create table if not exists employees" +
+                    ");";
+            String employees = "create table if not exists employees" +
                     "(" +
                     "    id_employee    integer primary key autoincrement," +
                     "    surname        TEXT not null," +
                     "    name           TEXT not null, " +
                     "    middlename     TEXT null, " +
                     "    date_of_birth  date not null," +
-                    "    address        binary(1) null  " +//Навыки
-                    ");" +
-                    "create table if not exists services" +
+                    "    address        binary(1) null  " +
+                    ");";
+            String services = "create table if not exists services" +
                     "(" +
                     "    id_service     integer primary key autoincrement," +
-                    "    service_name   TEXT" +
-                    ");" +
-                    "create table if not exists visits" +
+                    "    service_name   TEXT not null " +
+                    ");";
+            String visits = "create table if not exists visits" +
                     "(" +
                     "    id_visit       integer primary key autoincrement," +
                     "    id_employee    integer not null," +
@@ -52,13 +52,18 @@ public class DBAdapter {
                     "    id_service     integer not null," +
                     "    incident       text null  " +
                     ");";
-            stmt.execute(sql);
+            stmt.execute(dogs);
+            stmt.execute(owners);
+            stmt.execute(employees);
+            stmt.execute(services);
+            stmt.execute(visits);
             System.out.println("Tables created");
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
+    /// Собаки ///
     public void insertDogs(String id_owners, String dog_name, String species) throws SQLException {
         con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
         String sql = "INSERT INTO dogs(id_owners, dog_name, species) " +
@@ -107,6 +112,74 @@ public class DBAdapter {
         System.out.println("Updated data");
     }
 
+
+
+    /// Хозяева ///
+    /*public void insertOwners(String surname, String name, String middlename, String address) throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        String sql = "INSERT INTO owners(surname, name, middlename, address) " +
+                "VALUES('"+surname+"','"+name+"','"+middlename+",'"+address+"')";
+        try (Statement stmt = con.createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println("error in 'insertOwners': " + e);
+        }
+        System.out.println("Inserted in Owners Table");
+    }*/
+
+    public void insertOwners(String surname, String name, String middlename, String address) throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        String sql = "INSERT INTO owners (surname, name, middlename, address) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, surname);
+            pstmt.setString(2, name);
+            pstmt.setString(3, middlename);
+            pstmt.setString(4, address);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error in 'insertOwners': " + e.getMessage());
+        }
+    }
+
+
+    ArrayList<Owners> select_dataOwners() throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        ArrayList<Owners> owners = new ArrayList<Owners>();
+
+        String sql = "SELECT *  FROM owners";
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()){
+            int id_owner = rs.getInt("id_owner");
+            String surname = rs.getString("surname");
+            String name = rs.getString("name");
+            String middlename = rs.getString("middlename");
+            String address = rs.getString("address");
+            owners.add(new Owners(id_owner,surname,name,middlename,address));
+        }
+        return owners;
+    }
+
+    void delete_dataOwners(Integer id) throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        String sql = "DELETE FROM owners WHERE id_owner='"+id+"'";
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(sql);
+        stmt.close();
+        System.out.println("Deleted data");
+    }
+
+    void update_dataOwners(Integer id_owner,String surname, String name, String middlename, String address) throws SQLException {
+        String sql = "UPDATE owners SET middlename='"+middlename+"', surname='"+surname+"' , name='"+name+"' , address='"+address+"' WHERE id_owner='"+id_owner+"'";
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(sql);
+        stmt.close();
+        System.out.println("Updated data");
+    }
+
+
+
+
 /*
     public void insertOwners(String surname, String name, String middlename, String address) {
         String sql = "insert into owners (surname, name, middlename, address)" +
@@ -129,16 +202,7 @@ public class DBAdapter {
         System.out.println("Inserted in Owners Table");
     }
 
-    public void insertServices(String service_name) {
-        String sql = "insert into services (service_name)" +
-                "values (" + service_name + ")";
-        try (Statement stmt = con.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            System.out.println("error in 'insertServices': " + e);
-        }
-        System.out.println("Inserted in Services Table");
-    }
+
 
     public void insertVisits(Integer id_employee, Integer id_dog, java.sql.Date date_of_visit, java.sql.Time coming_time, java.sql.Time leaving_time, Integer walking_time, Integer id_service, String incident) {
         String sql = "insert into visits (id_employee, id_dog, date_of_visit, coming_time, leaving_time, walking_time, id_service, incident)" +

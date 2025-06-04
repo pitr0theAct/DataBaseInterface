@@ -70,7 +70,7 @@ public class HelloController implements Initializable {
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.showAndWait();
+            stage.show();
         });
 
 
@@ -88,7 +88,7 @@ public class HelloController implements Initializable {
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.showAndWait();
+            stage.show();
         });
 
         VisitsTable.setOnAction(event -> {
