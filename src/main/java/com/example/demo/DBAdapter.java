@@ -50,7 +50,7 @@ public class DBAdapter {
                     "    leaving_time   TEXT not null, " +
                     "    walking_time   integer not null," +
                     "    id_service     integer not null," +
-                    "    incident       TEXT null  " +
+                    "    incident       TEXT not null  " +
                     ");";
             stmt.execute(dogs);
             stmt.execute(owners);
@@ -268,10 +268,8 @@ public class DBAdapter {
 
 
 
-
-/*
-
-    public void insertVisits(Integer id_employee, Integer id_dog, java.sql.Date date_of_visit, java.sql.Time coming_time, java.sql.Time leaving_time, Integer walking_time, Integer id_service, String incident) {
+    /// Посещения ///
+    public void insertVisits(Integer id_employee, Integer id_dog, String date_of_visit, String coming_time, String leaving_time, Integer walking_time, Integer id_service, String incident) {
         String sql = "insert into visits (id_employee, id_dog, date_of_visit, coming_time, leaving_time, walking_time, id_service, incident)" +
                 "values (" + id_employee + ", " + id_dog + ", " + date_of_visit + ", " + coming_time + "," + leaving_time + "," + walking_time + "," + id_service + "," +  incident + ")";
         try (Statement stmt = con.createStatement()) {
@@ -281,7 +279,48 @@ public class DBAdapter {
         }
         System.out.println("Inserted in Visits Table");
     }
-*/
+
+    ArrayList<Visits> select_dataVisits() throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        ArrayList<Visits> visits = new ArrayList<>();
+
+        String sql = "SELECT *  FROM visits";
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        while (rs.next()){
+            int id_visits = rs.getInt("id_visit");
+            int id_employee = rs.getInt("id_employee");
+            int id_dog = rs.getInt("id_dog");
+            String date_of_visit = rs.getString("date_of_visit");
+            String coming_time = rs.getString("coming_time");
+            String leaving_time = rs.getString("leaving_time");
+            int walking_time = rs.getInt("walking_time");
+            int id_service = rs.getInt("id_service");
+            String incident = rs.getString("incident");
+            visits.add(new Visits(id_visits,id_employee,id_dog, date_of_visit, coming_time, leaving_time, walking_time, id_service, incident));
+        }
+        return visits;
+    }
+
+    void delete_dataVisits(Integer id) throws SQLException {
+        con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");
+        String sql = "DELETE FROM visits WHERE id_visit='"+id+"'";
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(sql);
+        stmt.close();
+        System.out.println("Deleted data");
+    }
+
+
+    void  update_dataVisits(Integer id_visit,Integer id_employee, Integer id_dog, String date_of_visit, String coming_time, String leaving_time, Integer walking_time, Integer id_service, String incident) throws SQLException {
+        String sql = "UPDATE visits SET  id_employee ='"+id_employee+"', id_dog='"+id_dog+"' , date_of_visit ='"+date_of_visit+"' , " +
+                "coming_time='"+coming_time+"' , leaving_time ='"+leaving_time+"' " +
+                ", walking_time ='"+walking_time+"' , id_service ='"+id_service+"' , incident ='"+incident+"' WHERE id_visit='"+id_visit+"'";
+        Statement stmt = con.createStatement();
+        stmt.executeUpdate(sql);
+        stmt.close();
+        System.out.println("Updated data");
+    }
 
 
 }
