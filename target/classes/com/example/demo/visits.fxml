@@ -10,11 +10,11 @@
       <TableView fx:id="tableVisits" layoutX="149.0" prefHeight="398.0" prefWidth="701.0" />
       <TextField fx:id="txt_workerID" layoutY="2.0" promptText="id_работника" />
       <TextField fx:id="txt_dogID" layoutX="1.0" layoutY="27.0" promptText="id_собаки" />
-      <TextField fx:id="txt_date" layoutY="52.0" promptText="дата помещения" />
-      <Button layoutY="240.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="25.0" prefWidth="149.0" text="Add" />
-      <Button layoutY="276.0" mnemonicParsing="false" onAction="#onUpdateButtonClick" prefHeight="25.0" prefWidth="149.0" text="Change" />
-      <Button layoutY="317.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" prefHeight="25.0" prefWidth="149.0" text="Delete" />
-      <Button layoutY="398.0" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" text="Back to starting page" />
+      <TextField fx:id="txt_date" layoutY="52.0" promptText="дата поcещения" />
+      <Button layoutY="240.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="25.0" prefWidth="149.0" text="Добавить" />
+      <Button layoutY="276.0" mnemonicParsing="false" onAction="#onUpdateButtonClick" prefHeight="25.0" prefWidth="149.0" text="Изменить" />
+      <Button layoutY="317.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" prefHeight="25.0" prefWidth="149.0" text="Удалить" />
+      <Button layoutY="398.0" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" text="Назад" />
       <TextField fx:id="txt_time1" layoutY="77.0" promptText="время прихода" />
       <TextField fx:id="txt_time2" layoutY="102.0" promptText="время ухода" />
       <TextField fx:id="txt_time12" layoutY="127.0" promptText="чистое время прогулки" />

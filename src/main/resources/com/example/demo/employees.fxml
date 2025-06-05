@@ -11,10 +11,10 @@
       <TextField fx:id="txt_surname" layoutY="2.0" promptText="фамилия" />
       <TextField fx:id="txt_name" layoutX="1.0" layoutY="27.0" promptText="имя" />
       <TextField fx:id="txt_middlename" layoutY="52.0" promptText="отчество" />
-      <Button layoutY="136.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="25.0" prefWidth="149.0" text="Add" />
-      <Button layoutY="174.0" mnemonicParsing="false" onAction="#onUpdateButtonClick" prefHeight="25.0" prefWidth="149.0" text="Change" />
-      <Button layoutY="210.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" prefHeight="25.0" prefWidth="149.0" text="Delete" />
-      <Button layoutY="398.0" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" text="Back to starting page" />
+      <Button layoutY="136.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="25.0" prefWidth="149.0" text="Добавить" />
+      <Button layoutY="174.0" mnemonicParsing="false" onAction="#onUpdateButtonClick" prefHeight="25.0" prefWidth="149.0" text="Изменить" />
+      <Button layoutY="210.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" prefHeight="25.0" prefWidth="149.0" text="Удалить" />
+      <Button layoutY="398.0" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" text="Назад" />
       <TextField fx:id="txt_birthdate" layoutY="77.0" promptText="дата рождения" />
       <TextField fx:id="txt_address" layoutY="102.0" promptText="ветеринарные навыки" />
    </children>

@@ -9,9 +9,9 @@
    <children>
       <TableView fx:id="tableServices" layoutX="149.0" prefHeight="398.0" prefWidth="552.0" />
       <TextField fx:id="txt_service_name" layoutY="33.0" promptText="название" />
-      <Button layoutY="77.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="25.0" prefWidth="149.0" text="Add" />
-      <Button layoutY="108.0" mnemonicParsing="false" onAction="#onUpdateButtonClick" prefHeight="25.0" prefWidth="149.0" text="Change" />
-      <Button layoutY="140.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" prefHeight="25.0" prefWidth="149.0" text="Delete" />
-      <Button layoutY="398.0" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" text="Back to starting page" />
+      <Button layoutY="77.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="25.0" prefWidth="149.0" text="Добавить" />
+      <Button layoutY="108.0" mnemonicParsing="false" onAction="#onUpdateButtonClick" prefHeight="25.0" prefWidth="149.0" text="Изменить" />
+      <Button layoutY="140.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" prefHeight="25.0" prefWidth="149.0" text="Удалить" />
+      <Button layoutY="398.0" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="25.0" prefWidth="149.0" text="Назад" />
    </children>
 </AnchorPane>
