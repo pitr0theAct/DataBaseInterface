@@ -19,6 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import static com.example.demo.Functions.isNumeric;
 
 public class ServicesController implements Initializable {
     DBAdapter adapter = new DBAdapter();
@@ -36,7 +37,7 @@ public class ServicesController implements Initializable {
 
         if (service_name.isEmpty() ) {
 
-        }else {
+        }else if (!isNumeric(service_name)){
             adapter.insertServices(service_name);
         }
         updateTable();
@@ -59,8 +60,12 @@ public class ServicesController implements Initializable {
         Services services = tableServices.getSelectionModel().getSelectedItem();
         System.out.println(services.getId_service());
         String service_name = txt_service_name.getText();
-        adapter.update_dataServices(services.getId_service(), service_name);
-        updateTable();
+        if (service_name.isEmpty() ) {
+
+        }else if (!isNumeric(service_name)){
+            adapter.update_dataServices(services.getId_service(), service_name);
+            updateTable();
+        }
     }
 
     private void updateTable() throws IOException, SQLException {

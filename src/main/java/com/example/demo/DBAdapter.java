@@ -270,15 +270,22 @@ public class DBAdapter {
 
     /// Посещения ///
     public void insertVisits(Integer id_employee, Integer id_dog, String date_of_visit, String coming_time, String leaving_time, Integer walking_time, Integer id_service, String incident) {
-        String sql = "insert into visits (id_employee, id_dog, date_of_visit, coming_time, leaving_time, walking_time, id_service, incident)" +
-                "values (" + id_employee + ", " + id_dog + ", " + date_of_visit + ", " + coming_time + "," + leaving_time + "," + walking_time + "," + id_service + "," +  incident + ")";
-        try (Statement stmt = con.createStatement()) {
-            stmt.execute(sql);
+        String sql = "insert into visits (id_employee, id_dog, date_of_visit, coming_time, leaving_time, walking_time, id_service, incident) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, id_employee);
+            pstmt.setInt(2, id_dog);
+            pstmt.setString(3, date_of_visit);
+            pstmt.setString(4, coming_time);
+            pstmt.setString(5, leaving_time);
+            pstmt.setInt(6, walking_time);
+            pstmt.setInt(7, id_service);
+            pstmt.setString(8, incident);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("error in 'insertVisits': " + e);
+            System.err.println("Error in 'insertVisits': " + e.getMessage());
         }
-        System.out.println("Inserted in Visits Table");
     }
+
 
     ArrayList<Visits> select_dataVisits() throws SQLException {
         con = DriverManager.getConnection("jdbc:sqlite:dogWalkers.sqlite");

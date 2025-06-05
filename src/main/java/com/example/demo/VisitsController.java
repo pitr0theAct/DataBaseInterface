@@ -19,6 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import static com.example.demo.Functions.*;
 
 public class VisitsController implements Initializable {
     DBAdapter adapter = new DBAdapter();
@@ -65,7 +66,10 @@ public class VisitsController implements Initializable {
         if (date_of_visit.isEmpty() || txt_workerID.getText().isEmpty() || txt_dogID.getText().isEmpty() || coming_time.isEmpty()
         || leaving_time.isEmpty() || txt_time12.getText().isEmpty() || txt_serviceID.getText().isEmpty() || incident.isEmpty()) {
 
-        }else {
+        }else if (isNumeric(txt_workerID.getText()) && isNumeric(txt_dogID.getText()) && isValidDate(date_of_visit)
+        && isValidTime(coming_time) && isValidTime(leaving_time) && isNumeric(txt_time12.getText()) && isNumeric(txt_serviceID.getText())
+        && !isNumeric(incident))
+        {
             adapter.insertVisits(id_employee, id_dog, date_of_visit, coming_time,leaving_time, walking_time, id_service, incident);
         }
         updateTable();
@@ -96,8 +100,17 @@ public class VisitsController implements Initializable {
         int walking_time = Integer.parseInt(txt_time12.getText());
         int id_service = Integer.parseInt(txt_serviceID.getText());
         String incident = txt_incident.getText();
-        adapter.update_dataVisits(visits.getId_visit(), id_employee, id_dog, date_of_visit, coming_time,leaving_time, walking_time, id_service, incident);
-        updateTable();
+        if (date_of_visit.isEmpty() || txt_workerID.getText().isEmpty() || txt_dogID.getText().isEmpty() || coming_time.isEmpty()
+                || leaving_time.isEmpty() || txt_time12.getText().isEmpty() || txt_serviceID.getText().isEmpty() || incident.isEmpty()) {
+
+        }else if (isNumeric(txt_workerID.getText()) && isNumeric(txt_dogID.getText()) && isValidDate(date_of_visit)
+                && isValidTime(coming_time) && isValidTime(leaving_time) && isNumeric(txt_time12.getText()) && isNumeric(txt_serviceID.getText())
+                && !isNumeric(incident))
+        {
+            adapter.update_dataVisits(visits.getId_visit(), id_employee, id_dog, date_of_visit, coming_time,leaving_time, walking_time, id_service, incident);
+            updateTable();
+        }
+
     }
 
     private void updateTable() throws IOException, SQLException {

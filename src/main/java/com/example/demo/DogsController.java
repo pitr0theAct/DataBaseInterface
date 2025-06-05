@@ -17,6 +17,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static com.example.demo.Functions.*;
+
 
 public class DogsController implements Initializable {
     DBAdapter adapter = new DBAdapter();
@@ -42,7 +44,7 @@ public class DogsController implements Initializable {
 
         if (dog_name.isEmpty() || id_owners.isEmpty() || species.isEmpty()) {
 
-        }else {
+        }else if (isNumeric(id_owners) && !isNumeric(dog_name) && !isNumeric(species)) {
             adapter.insertDogs(id_owners, dog_name, species);
         }
         updateTable();
@@ -68,8 +70,12 @@ public class DogsController implements Initializable {
         String dog_name = txt_dogname.getText();
         String id_owners = txt_ownerID.getText();
         String species = txt_species.getText();
-        adapter.update_dataDogs(dogs.getId_dog(), id_owners, dog_name, species);
-        updateTable();
+        if (dog_name.isEmpty() || id_owners.isEmpty() || species.isEmpty()) {
+
+        }else if (isNumeric(id_owners) && !isNumeric(dog_name) && !isNumeric(species)) {
+            adapter.update_dataDogs(dogs.getId_dog(), id_owners, dog_name, species);
+            updateTable();
+        }
     }
 
     private void updateTable() throws IOException, SQLException {

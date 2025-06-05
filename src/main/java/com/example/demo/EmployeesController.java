@@ -19,6 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import static com.example.demo.Functions.*;
 
 public class EmployeesController implements Initializable {
     DBAdapter adapter = new DBAdapter();
@@ -53,7 +54,7 @@ public class EmployeesController implements Initializable {
 
         if (surname.isEmpty() || name.isEmpty() || date_of_birth.isEmpty() ) {
 
-        }else {
+        }else if (!isNumeric(surname) && !isNumeric(name) && !isNumeric(middle_name) && isValidDate(date_of_birth) && isNumeric(address)) {
             adapter.insertEmployees( surname, name, middle_name, date_of_birth, address);
         }
         updateTable();
@@ -80,8 +81,13 @@ public class EmployeesController implements Initializable {
         String middle_name = txt_middlename.getText();
         String date_of_birth = txt_birthdate.getText();
         String address = txt_address.getText();
-        adapter.update_dataEmployees(employees.getId_employee(), surname, name, middle_name, date_of_birth,address);
-        updateTable();
+        if (surname.isEmpty() || name.isEmpty() || date_of_birth.isEmpty() ) {
+
+        }else if (!isNumeric(surname) && !isNumeric(name) && !isNumeric(middle_name) && isValidDate(date_of_birth) && isNumeric(address)) {
+            adapter.update_dataEmployees(employees.getId_employee(), surname, name, middle_name, date_of_birth,address);
+            updateTable();
+        }
+
     }
 
 

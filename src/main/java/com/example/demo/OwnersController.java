@@ -19,6 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import static com.example.demo.Functions.*;
 
 public class OwnersController implements Initializable {
     DBAdapter adapter = new DBAdapter();
@@ -48,7 +49,7 @@ public class OwnersController implements Initializable {
 
         if (surname.isEmpty() || name.isEmpty() || middlename.isEmpty() || address.isEmpty()) {
 
-        }else {
+        }else if (!isNumeric(surname) && !isNumeric(name) && !isNumeric(middlename) && !isNumeric(address)) {
             adapter.insertOwners(surname, name, middlename, address);
         }
         updateTableOwners();
@@ -74,8 +75,13 @@ public class OwnersController implements Initializable {
         String name = txt_name.getText();
         String middlename = txt_middlename.getText();
         String address = txt_address.getText();
-        adapter.update_dataOwners(owners.getId_owner(), surname, name, middlename, address);
-        updateTableOwners();
+        if (surname.isEmpty() || name.isEmpty() || middlename.isEmpty() || address.isEmpty()) {
+
+        }else if (!isNumeric(surname) && !isNumeric(name) && !isNumeric(middlename) && !isNumeric(address)) {
+            adapter.update_dataOwners(owners.getId_owner(), surname, name, middlename, address);
+            updateTableOwners();
+        }
+
     }
 
     private void updateTableOwners() throws IOException, SQLException {

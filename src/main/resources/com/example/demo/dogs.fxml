@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.DogsController">
    <children>
-      <TableView fx:id="tableDogs" layoutX="149.0" prefHeight="398.0" prefWidth="553.0" />
+      <TableView fx:id="tableDogs" layoutX="149.0" prefHeight="398.0" prefWidth="554.0" />
       <TextField fx:id="txt_ownerID" layoutY="2.0" promptText="id_хозяина" />
       <TextField fx:id="txt_dogname" layoutY="27.0" promptText="кличка" />
       <TextField fx:id="txt_species" layoutY="52.0" promptText="порода" />
