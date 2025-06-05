@@ -53,6 +53,7 @@ public class HelloController implements Initializable {
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("Таблица Собаки");
             stage.show();
         });
 
@@ -70,6 +71,7 @@ public class HelloController implements Initializable {
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("Таблица Хозяева");
             stage.show();
         });
 
@@ -88,6 +90,7 @@ public class HelloController implements Initializable {
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("Таблица Услуги");
             stage.show();
         });
 
@@ -105,6 +108,7 @@ public class HelloController implements Initializable {
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("Таблица Посещения");
             stage.showAndWait();
         });
 
@@ -124,6 +128,7 @@ public class HelloController implements Initializable {
             Parent root = loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("Таблица Работники");
             stage.showAndWait();
         });
 
